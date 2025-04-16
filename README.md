@@ -20,6 +20,75 @@ The Climate Ecosystem Assistant (CEA) is a state-of-the-art AI application desig
   - International Credential Evaluation for foreign professionals
   - EJ Community Resources for Gateway Cities residents
 
+## User Flows
+
+The Climate Ecosystem Assistant supports several key user flows to help job seekers navigate clean energy careers:
+
+### General Career Guidance Flow
+
+1. **Initial Interaction**: User initiates conversation with the supervisor agent (Pendo)
+2. **Need Assessment**: Pendo asks exploratory questions to understand user background and goals
+3. **Knowledge Base Search**: System retrieves relevant information about clean energy careers
+4. **Personalized Response**: Pendo provides tailored information based on user's specific interests
+5. **Career Path Suggestions**: System recommends potential pathways in the clean energy sector
+6. **Resource Sharing**: Relevant resources, training programs, and job opportunities are shared
+
+### Resume Analysis Flow
+
+1. **Resume Upload**: User uploads their resume in PDF, DOCX, or plain text format
+2. **Skill Extraction**: System analyzes the resume to identify existing skills and experience
+3. **Climate Economy Relevance**: Skills are mapped to clean energy sector requirements
+4. **Gap Analysis**: System identifies skills gaps for desired clean energy roles
+5. **Detailed Report**: User receives a comprehensive assessment with:
+   - Climate relevance score (0-100)
+   - Transferable skills analysis
+   - Skill gap identification
+   - Recommended training opportunities
+6. **Guided Action Plan**: Personalized suggestions for next steps to transition into clean energy
+
+### Environmental Justice Community Support Flow
+
+1. **Location Identification**: User identifies their community or neighborhood
+2. **EJ Community Detection**: System recognizes if the location is in an environmental justice community
+3. **Resource Connection**: Jasmine specialist provides information on:
+   - Community-specific training programs
+   - Local hiring initiatives
+   - Support services for underrepresented communities
+   - Transportation assistance
+   - Childcare resources
+4. **Barrier Assessment**: Jasmine helps identify and address potential barriers to employment
+5. **Community Partner Connection**: User is connected to relevant community organizations
+
+### Veterans Transition Flow
+
+1. **Military Background Input**: Veteran user provides information about military role and experience
+2. **MOS/Rating Translation**: Marcus specialist translates military occupations to civilian equivalents
+3. **Skill Mapping**: Military skills are mapped to clean energy sector requirements
+4. **Veteran-Specific Resources**: Information on:
+   - GI Bill-eligible training programs
+   - Veteran hiring initiatives in clean energy
+   - Veteran entrepreneurship opportunities
+   - Support services for veteran transition
+5. **Personalized Transition Plan**: Custom roadmap for military-to-clean-energy career transition
+
+### International Professionals Flow
+
+1. **Credential Assessment**: Miguel specialist evaluates international degrees and certifications
+2. **Equivalency Guidance**: Provides information on US equivalency for foreign credentials
+3. **Recertification Pathways**: Identifies necessary steps for professional recognition
+4. **Language Support Resources**: Suggests language training resources if needed
+5. **Cultural Integration**: Provides guidance on US workplace norms in clean energy sector
+6. **International-Friendly Employers**: Identifies companies with track records of hiring international talent
+
+### Training Program Matching Flow
+
+1. **Skill Gap Identification**: System analyzes user's current skills versus career goals
+2. **Program Search**: Searches database for relevant training programs
+3. **Eligibility Check**: Identifies programs user qualifies for based on background and location
+4. **Funding Options**: Provides information on scholarships, grants, and financial assistance
+5. **Application Guidance**: Helps user understand application requirements and deadlines
+6. **Success Tracking**: Follows up on user progress through training completion
+
 ## System Architecture
 
 The CEA uses a LangGraph-based orchestration of multiple AI agents:
