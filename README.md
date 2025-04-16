@@ -33,6 +33,17 @@ The Climate Ecosystem Assistant supports several key user flows to help job seek
 5. **Career Path Suggestions**: System recommends potential pathways in the clean energy sector
 6. **Resource Sharing**: Relevant resources, training programs, and job opportunities are shared
 
+```mermaid
+flowchart TD
+    A[User] -->|Initiates Chat| B[Supervisor/Pendo]
+    B -->|Asks Questions| C[Need Assessment]
+    C -->|Query Formulation| D[Knowledge Base Search]
+    D -->|Relevant Information| E[Personalized Response]
+    E -->|Career Options| F[Career Path Suggestions]
+    F -->|Resources & Programs| G[Resource Sharing]
+    G -->|Next Steps| A
+```
+
 ### Resume Analysis Flow
 
 1. **Resume Upload**: User uploads their resume in PDF, DOCX, or plain text format
@@ -45,6 +56,17 @@ The Climate Ecosystem Assistant supports several key user flows to help job seek
    - Skill gap identification
    - Recommended training opportunities
 6. **Guided Action Plan**: Personalized suggestions for next steps to transition into clean energy
+
+```mermaid
+flowchart TD
+    A[User] -->|Uploads Resume| B[Document Processing]
+    B -->|Extracts Text| C[Skill Extraction]
+    C -->|Skill List| D[Climate Economy Mapping]
+    D -->|Mapped Skills| E[Gap Analysis]
+    E -->|Gaps Identified| F[Detailed Report Generation]
+    F -->|Delivers Report| G[Personalized Action Plan]
+    G -->|Presents to| A
+```
 
 ### Environmental Justice Community Support Flow
 
@@ -59,6 +81,17 @@ The Climate Ecosystem Assistant supports several key user flows to help job seek
 4. **Barrier Assessment**: Jasmine helps identify and address potential barriers to employment
 5. **Community Partner Connection**: User is connected to relevant community organizations
 
+```mermaid
+flowchart TD
+    A[User] -->|Provides Location| B[EJ Community Detection]
+    B -->|Routes to Specialist| C[Jasmine EJ Specialist]
+    C -->|Analyzes Needs| D[Resource Identification]
+    D -->|Available Programs| E[Support Services Information]
+    E -->|Assesses Barriers| F[Barrier Mitigation Plan]
+    F -->|Partner Organizations| G[Community Connection]
+    G -->|Connects| A
+```
+
 ### Veterans Transition Flow
 
 1. **Military Background Input**: Veteran user provides information about military role and experience
@@ -71,6 +104,17 @@ The Climate Ecosystem Assistant supports several key user flows to help job seek
    - Support services for veteran transition
 5. **Personalized Transition Plan**: Custom roadmap for military-to-clean-energy career transition
 
+```mermaid
+flowchart TD
+    A[Veteran User] -->|Military Background| B[Service Recognition]
+    B -->|Routes to Specialist| C[Marcus Veterans Specialist]
+    C -->|MOS/Rating Analysis| D[Military-Civilian Translation]
+    D -->|Translated Skills| E[Clean Energy Skill Mapping]
+    E -->|Identifies Programs| F[Veteran Resources]
+    F -->|Custom Roadmap| G[Transition Plan]
+    G -->|Guidance for| A
+```
+
 ### International Professionals Flow
 
 1. **Credential Assessment**: Miguel specialist evaluates international degrees and certifications
@@ -79,6 +123,18 @@ The Climate Ecosystem Assistant supports several key user flows to help job seek
 4. **Language Support Resources**: Suggests language training resources if needed
 5. **Cultural Integration**: Provides guidance on US workplace norms in clean energy sector
 6. **International-Friendly Employers**: Identifies companies with track records of hiring international talent
+
+```mermaid
+flowchart TD
+    A[International User] -->|Credentials Info| B[Credential Assessment]
+    B -->|Routes to Specialist| C[Miguel Int'l Specialist]
+    C -->|Evaluates Degrees| D[US Equivalency Analysis]
+    D -->|Certification Needs| E[Recertification Guidance]
+    E -->|Language Assessment| F[Language Resources]
+    F -->|Workplace Norms| G[Cultural Integration]
+    G -->|Hiring Opportunities| H[Int'l-Friendly Employers]
+    H -->|Connects| A
+```
 
 ### Training Program Matching Flow
 
@@ -89,6 +145,17 @@ The Climate Ecosystem Assistant supports several key user flows to help job seek
 5. **Application Guidance**: Helps user understand application requirements and deadlines
 6. **Success Tracking**: Follows up on user progress through training completion
 
+```mermaid
+flowchart TD
+    A[User] -->|Career Goals| B[Skill Gap Analysis]
+    B -->|Identified Gaps| C[Training Program Search]
+    C -->|Available Programs| D[Eligibility Assessment]
+    D -->|Qualified Programs| E[Funding Options]
+    E -->|Financial Aid| F[Application Process Guidance]
+    F -->|Enrollment| G[Progress Tracking]
+    G -->|Completion Check-ins| A
+```
+
 ## System Architecture
 
 The CEA uses a LangGraph-based orchestration of multiple AI agents:
@@ -98,6 +165,35 @@ The CEA uses a LangGraph-based orchestration of multiple AI agents:
 - **Jasmine**: Environmental justice specialist for underserved communities
 - **Marcus**: Veterans specialist for military skill translation 
 - **Miguel**: International professionals specialist for credential evaluation
+
+```mermaid
+graph TD
+    User((User)) <-->|Interaction| Supervisor[Pendo - Supervisor]
+    
+    Supervisor <-->|Career Questions| Liv[Liv - Career Specialist]
+    Supervisor <-->|EJ Community| Jasmine[Jasmine - EJ Specialist]
+    Supervisor <-->|Military Background| Marcus[Marcus - Veterans Specialist]
+    Supervisor <-->|International Credentials| Miguel[Miguel - Int'l Specialist]
+    
+    Supervisor -->|Orchestrates| Integration[Response Integration]
+    Integration -->|Final Response| User
+    
+    Liv <--> KB[(Knowledge Base)]
+    Jasmine <--> KB
+    Marcus <--> KB
+    Miguel <--> KB
+    Supervisor <--> KB
+    
+    KB <--> RC[(Redis Cache)]
+    
+    subgraph External Resources
+        Training[Training Programs]
+        Jobs[Job Listings]
+        Partners[Community Partners]
+    end
+    
+    KB <--> External Resources
+```
 
 ### LLM Configuration System
 
@@ -122,9 +218,74 @@ creative_llm = get_groq_llm({
 })
 ```
 
+```mermaid
+graph TD
+    Config[Configuration System] --> Dev[Development Environment]
+    Config --> Prod[Production Environment]
+    
+    Dev --> OpenAI_Dev[OpenAI Models]
+    Dev --> Groq_Dev[Groq Models]
+    Dev --> Anthropic_Dev[Anthropic Models]
+    
+    Prod --> OpenAI_Prod[OpenAI Models]
+    Prod --> Groq_Prod[Groq Models]
+    
+    subgraph Model Parameters
+        Temp[Temperature]
+        Tokens[Max Tokens]
+        TopP[Top P]
+        TopK[Top K]
+    end
+    
+    OpenAI_Dev --> Model Parameters
+    OpenAI_Prod --> Model Parameters
+    Groq_Dev --> Model Parameters
+    Groq_Prod --> Model Parameters
+    Anthropic_Dev --> Model Parameters
+    
+    subgraph Agent Assignments
+        Pendo[Supervisor - GPT-4]
+        Liv[Career - Claude 3]
+        Jasmine[EJ - Mixtral]
+        Marcus[Veterans - GPT-4]
+        Miguel[Int'l - Claude 3]
+    end
+    
+    OpenAI_Prod --> Pendo
+    OpenAI_Prod --> Marcus
+    Anthropic_Dev --> Liv
+    Anthropic_Dev --> Miguel
+    Groq_Dev --> Jasmine
+```
+
 ## State Management
 
 The CEA implements a sophisticated state management system using Redis:
+
+```mermaid
+graph TD
+    User((User)) -->|Authentication| Auth[Authentication System]
+    Auth -->|Creates| Session[(User Session)]
+    
+    User -->|Conversation| Chat[Chat Interface]
+    Chat -->|Stores| Messages[(Message History)]
+    Chat -->|References| Context[(Specialist Context)]
+    
+    subgraph Redis Storage
+        Session
+        Messages
+        Context
+        KBCache[(Knowledge Base Cache)]
+    end
+    
+    Chat -->|Queries| KB[Knowledge Base]
+    KB -->|Caches Results| KBCache
+    KB <-->|Fast Retrieval| Chat
+    
+    Session -->|User Data| TTL[TTL: 7 days]
+    Messages -->|Chat History| TTL2[TTL: 30 days]
+    KBCache -->|Search Results| TTL3[TTL: 1 hour]
+```
 
 ### Authentication and Session Management
 
@@ -294,6 +455,27 @@ The application uses lifespan events to manage connections to Redis and Supabase
 
 - **On Startup**: Establishes connections to Redis and Supabase
 - **On Shutdown**: Gracefully closes connections to prevent resource leaks
+
+```mermaid
+sequenceDiagram
+    participant App as FastAPI App
+    participant Redis as Redis
+    participant Supabase as Supabase
+    
+    App ->> App: Start
+    App ->> Redis: Connect
+    Redis -->> App: Connection Established
+    App ->> Supabase: Connect
+    Supabase -->> App: Connection Established
+    
+    Note over App,Supabase: Application Running
+    
+    App ->> App: Shutdown Signal
+    App ->> Redis: Close Connection
+    Redis -->> App: Connection Closed
+    App ->> Supabase: Close Connection
+    Supabase -->> App: Connection Closed
+```
 
 ### Deployment Steps
 
