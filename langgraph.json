@@ -1,0 +1,16 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "climate_assistant": "./graph.py:climate_graph"
+  },
+  "env": ".env",
+  "http": {
+    "app": "./webapp.py:app"
+  },
+  "auth": {
+    "type": "none"
+  },
+  "store": {
+    "type": "memory"
+  }
+} 
